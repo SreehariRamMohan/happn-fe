@@ -11,8 +11,8 @@ ReactDOM.render(
   <React.StrictMode>
     {
       // <Login />
-      //   <SignUp />
-      //   <Form />
+        // <SignUp />
+        // <Form />
     }
     <App />
   </React.StrictMode>,
