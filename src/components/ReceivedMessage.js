@@ -4,42 +4,14 @@ import React from 'react';
 import { Avatar, Card, CardContent, Typography, CardActions, Button, Chip,
   List, ListItem, ListItemAvatar, Divider, ListItemText } from '@material-ui/core';
 
-export default function ReceivedMessage() {
-
-  {
-
-  //       <ListItemText
-  //         primary={props.name}
-  //         secondary={props.message}
-  //       />
-  }
+export default function ReceivedMessage(props) {
   return (
     <ListItem alignItems="center">
-
       <ListItemAvatar>
-        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" style={styles.avatar}/>
+        <Avatar alt={props.name} src={props.pfp}/>
       </ListItemAvatar>
-
-      <Chip label={"I cannot"} />
-
+      <Chip label={props.message} />
     </ListItem>
   );
-}
-
-const styles = {
-  cardOutline: {
-    border: "1px solid black",
-    display: "flex", 
-    // flexDirection: "row",
-    // alignItems: "center",
-    // width: "84%",
-    //
-    //
-    // backgroundColor: "blue",
-    padding: "2rem",
-  }, 
-  avatar: {
-    marginRight: "1rem",
-  }
 }
 

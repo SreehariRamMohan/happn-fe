@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 
 import SendIcon from '@material-ui/icons/Send';
-import { Box, Button, TextField,
+import { Box, Button, TextField, IconButton,
 List, ListItem, ListItemAvatar, Avatar, Typography, Divider, ListItemText} from '@material-ui/core';
 import PersonCard from '../components/PersonCard';
 import ReceivedMessage from '../components/ReceivedMessage';
+import SentMessage from '../components/SentMessage';
 
 export default function ChatScreen() {
 
   const [contacts, setContacts] = useState([
     { name: "kevin", message: "hello!fawlohfaiewrlerihglirheg!! i am stuck in the chat please save me i can't take this anymor-", pfp: "#" },
-    { name: "Sree", message: "“Truly you have a dizzying intellect,” whispered the man in black.", pfp: "#" },
-    { name: "Emily", message: "Hi!", pfp: "#" },
-    { name: "Gareth", message: "Hi!", pfp: "#" },
-    { name: "kevin", message: "hello!fawlohfaiewrlerihglirheg!! i am stuck in the chat please save me i can't take this anymor-", pfp: "#" },
+    { name: "Sree", message: "To the sweet balm of coffee, by the grace of which we shall accomplish the task before us", pfp: "#" },
+    { name: "Emily", message: "I had mentally decided not to be a part of this conversation, but based on the direction this is going in, I have to interject. ", pfp: "#" },
+    { name: "Gareth", message: "yep i can make a chat and stuff", pfp: "#" },
+    { name: "kevin", message: "She’s clearly shocked by my behavior. She should be. My behavior is shocking. ", pfp: "#" },
     { name: "Sree", message: "Hi!", pfp: "#" },
     { name: "Emily", message: "Hi!", pfp: "#" },
     { name: "Gareth", message: "Hi!", pfp: "#" },
@@ -25,12 +26,18 @@ export default function ChatScreen() {
 
   const [currentlyMessaging, setCurrentlyMessaging] = useState(contacts[0].name);
 
+  function changeMessageChat(newContactName) {
+    if (newContactName !== currentlyMessaging) {
+      setCurrentlyMessaging(newContactName);
+    }
+  }
+
   return (
-    <Box display="flex" flexDirection="row">
+    <Box display="flex" flexDirection="row" alignItems="flex-end">
       <div style={styles.contactsContainer}>
         {
           contacts.map((aContact) => 
-            <div onClick={() => alert(aContact.name)}>
+            <div onClick={() => changeMessageChat(aContact.name)}>
               <PersonCard 
                 name={aContact.name} 
                 message={aContact.message} 
@@ -43,18 +50,27 @@ export default function ChatScreen() {
 
       <div style={styles.chatContainer}>
         { currentlyMessaging }
-        <ReceivedMessage/>
-        <ReceivedMessage/>
-        <ReceivedMessage/>
 
-        <TextField
-          fullWidth
-          id="outlined-required"
-          defaultValue="There will be moments when you have to be a grown-up. Those moments are tricks.  Do not fall for them.
-"
-          variant="outlined"
-        />
-        <SendIcon/>
+        <div style={styles.messageBox}>
+          <ReceivedMessage name="kevin" message="hi" pfp="#"/>
+          <ReceivedMessage name="kevin" message="hi" pfp="#"/>
+          <SentMessage message="what"/>
+          <ReceivedMessage name="kevin" message="hi" pfp="#"/>
+          <SentMessage message="hi"/>
+        </div>
+
+        <Box display="flex" alignItems="center" justifyContent="center">
+          <TextField
+            id="outlined-required"
+            defaultValue="There will be moments when you have to be a grown-up. Those moments are tricks.  Do not fall for them. "
+            variant="outlined"
+            style={{ width: "92%" }}
+          />
+
+          <IconButton aria-label="send" style={{marginLeft: "0.4rem"}}>
+            <SendIcon style={{fontSize: 50}}/>
+          </IconButton>
+        </Box>
       </div>
     </Box>
   );
@@ -67,11 +83,13 @@ const styles = {
     overflowY: "scroll",
     maxHeight: "80vh"
   }, 
+  messageBox: {
+    height: "70vh",
+  }, 
   chatContainer: {
     width: "66vw",
     overflowY: "scroll",
   },
-
   root: {
     width: '100%',
     maxWidth: '36ch',
