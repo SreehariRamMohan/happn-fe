@@ -3,11 +3,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import Login from './Login';
+import SignUp from './SignUp';
+import Form from './Questions';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
     <Login />
+    <SignUp />
+    <Form />
   </React.StrictMode>,
   document.getElementById('root')
 );
