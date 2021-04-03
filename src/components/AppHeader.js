@@ -3,14 +3,16 @@ import { Button, Box, AppBar, Toolbar, IconButton, Typography } from '@material-
 
 export default function AppHeader() {
   return (
-    <AppBar>
-      <Toolbar>
-        <div style={styles.container}>
-          <Typography edge="start" variant="h6"> Happen! </Typography>
-          <Button color="inherit">Login</Button>
-        </div>
-      </Toolbar>
-    </AppBar>
+    <div style={{flexGrow: "1"}}>
+      <AppBar>
+        <Toolbar>
+          <div style={styles.container}>
+            <Typography edge="start" variant="h6"> Happen! </Typography>
+            <Button color="inherit">Login</Button>
+          </div>
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 }
 
