@@ -11,8 +11,16 @@ function App() {
     <div className="App">
       <AppHeader />
       <div style={{marginTop: "10vh"}}>
-        <ProfilePage />
-        {/* <ChatScreen /> */}
+        {
+          // <ProfilePage />
+        }
+        {
+
+          <React.Fragment>
+            <ChatScreen username="user1"/>
+            <ChatScreen username="user2"/>
+          </React.Fragment>
+        }
       </div>
     </div>
   );
