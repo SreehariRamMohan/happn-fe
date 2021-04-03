@@ -1,16 +1,23 @@
 
 import React from 'react';
 
-import { Avatar, Card, CardContent, Typography, CardActions, Button } from '@material-ui/core';
+import { Avatar, Card, CardContent, Typography, CardActions, Button,
+  List, ListItem, ListItemAvatar, Divider, ListItemText } from '@material-ui/core';
 
-export default function PersonCard() {
+export default function PersonCard(props) {
   return (
-    <Card variant="outlined" style={styles.cardOutline}>
-      <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" style={styles.avatar}/>
-      <Typography variant="h5" component="h2">
-        hello
-      </Typography>
-    </Card>
+    <React.Fragment>
+      <ListItem alignItems="flex-start">
+        <ListItemAvatar>
+          <Avatar alt={props.name} src={props.pfp} />
+        </ListItemAvatar>
+        <ListItemText
+          primary={props.name}
+          secondary={props.message}
+        />
+      </ListItem>
+      <Divider />
+    </React.Fragment>
   );
 }
 
