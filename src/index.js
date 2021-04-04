@@ -7,12 +7,6 @@ import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
-    {
-      // <Login />
-        // <SignUp />
-        // <Form />
-    }
-
     <BrowserRouter>
       <App />
     </BrowserRouter>
