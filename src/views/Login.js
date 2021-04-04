@@ -17,6 +17,7 @@ import Pattern from '../resources/happn-pattern.png';
 import { useNetwork } from '../hooks/NetworkContext';
 import { URL, AXIOS_CONFIG } from '../constants';
 
+
 function Copyright() {
   return (
     <div>
