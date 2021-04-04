@@ -37,19 +37,9 @@ export default function AppHeader() {
         <Toolbar>
           <div style={styles.container}>
 
-            <Typography edge="start" variant="h6"> Happen! </Typography>
+            <WhiteNavItem edge="start" variant="h6"> Happn</WhiteNavItem>
 
-            { routes.map((aName) => 
-              <NavLink to={ `/${aName}` }>
-                <Button variant="contained">
-                  {aName}
-                </Button>
-              </NavLink>
-              )
-            }
-            <WhiteNavItem edge="start" variant="h6"> Happen! </WhiteNavItem>
-
-            {location.pathname.includes("Login") || location.pathname.includes("Logout") ? routes_public.map((aName) => 
+            {location.pathname.includes("Login") || location.pathname.includes("logout") ? routes_public.map((aName) => 
               <Typography variant="h6">
                 <NavLink className={classes.navlink} to={ `/${aName}` }>
                     {aName}

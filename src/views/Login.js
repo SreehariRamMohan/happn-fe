@@ -16,7 +16,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Pattern from '../resources/happn-pattern.png';
 import { useNetwork } from '../hooks/NetworkContext';
 import { URL, AXIOS_CONFIG } from '../constants';
-
+import { useHistory } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -71,8 +71,12 @@ export default function Login(props) {
   const pass = useRef("");
   const networkActions = useNetwork();
 
+  const history = useHistory()
+
   function login(event) {
-    const toSend = {username: username, password: pass};
+    event.preventDefault()
+    const toSend = {username: username.current.value, password: pass.current.value};
+    console.log("to send data", toSend)
     axios.post(
       URL + "login",
       toSend,
@@ -82,7 +86,7 @@ export default function Login(props) {
         console.log(response.data);
         let data = response.data;
         networkActions.updateIdData({ 'mongo_id': data.mongo_id, 'friend_code': data.friend_code });
-        props.history.push("/profile");
+        history.push("/questionnaire");
       })
       .catch(function (error) {
         console.log(error);
@@ -102,7 +106,6 @@ export default function Login(props) {
           <Typography component="h1" variant="h5">
             Sign in to Happn!
           </Typography>
-          <form className={classes.form} noValidate>
             <TextField
               variant="outlined"
               margin="normal"
@@ -113,7 +116,7 @@ export default function Login(props) {
               name="email"
               autoComplete="email"
               autoFocus
-              onChange={(event) => username.current = event.target.value}
+              inputRef={username}
             />
             <TextField
               variant="outlined"
@@ -125,7 +128,7 @@ export default function Login(props) {
               type="password"
               id="password"
               autoComplete="current-password"
-              onChange={(event) => pass.current = event.target.value}
+              inputRef={pass}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary"/>}
@@ -138,7 +141,7 @@ export default function Login(props) {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-                onClick={login}
+                onClick={(e) => login(e)}
               >
                 Sign In
             </Button>
@@ -158,7 +161,6 @@ export default function Login(props) {
             <Box mt={5}>
               <Copyright/>
             </Box>
-          </form>
         </div>
       </Grid>
     </Grid>
