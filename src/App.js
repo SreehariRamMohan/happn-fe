@@ -6,12 +6,12 @@ import { Route, Switch } from 'react-router-dom';
 import ChatScreen from './views/ChatScreen';
 import AppHeader from './components/AppHeader';
 import ProfilePage from "./ProfilePage/ProfilePage"
-import Login from './Login';
-import SignUp from './SignUp';
-import Form from './Questions';
-
+import Login from './views/Login';
+import SignUp from './views/SignUp';
+import Form from './views/Questions';
 
 const routes = [
+  { path: '/', name: 'Login', Component: ChatScreen },
   { path: '/login', name: 'Login', Component: Login },
   { path: '/signup', name: 'Signup', Component: SignUp }, 
   { path: '/chats', name: 'Chats', Component: ChatScreen }, 
