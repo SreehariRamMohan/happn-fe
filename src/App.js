@@ -18,7 +18,7 @@ import SignUp from './views/SignUp';
 import Form from './views/Questions';
 
 const routes = [
-  { path: '/', name: 'Login', Component: ChatScreen },
+  { path: '/', name: 'Login', Component: Login },
   { path: '/login', name: 'Login', Component: Login },
   { path: '/signup', name: 'Signup', Component: SignUp }, 
   { path: '/chats', name: 'Chats', Component: ChatScreen }, 

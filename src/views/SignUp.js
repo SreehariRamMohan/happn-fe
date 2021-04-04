@@ -16,6 +16,7 @@ import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
 import { useNetwork } from '../hooks/NetworkContext';
 import { URL, AXIOS_CONFIG } from '../constants';
+import { useHistory } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -66,9 +67,11 @@ export default function SignUp() {
   const bio = useRef("");
 
   const networkActions = useNetwork();
+  const history = useHistory()
 
   function handleSubmit(event) {
-    const toSend = {username: firstName + lastName, password: pass};
+    event.preventDefault()
+    const toSend = {username: email.current, password: pass.current};
     axios.post(
       URL + "signup",
       toSend,
@@ -78,6 +81,7 @@ export default function SignUp() {
         console.log(response.data);
         let data = response.data;
         networkActions.updateIdData({ 'mongo_id': data.mongo_id, 'friend_code': data.friend_code });
+        history.push("/questionnaire");
         console.log(response);
       })
       .catch(function (error) {
@@ -162,12 +166,11 @@ export default function SignUp() {
             </Grid>
           </Grid>
           <Button
-            type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={handleSubmit}
+            onClick={(e) => handleSubmit(e)}
           >
             Make it happn!
           </Button>
