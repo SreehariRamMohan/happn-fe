@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Pattern from '../resources/happn-pattern.png';
 
+
 function Copyright() {
   return (
     <div>
@@ -68,7 +69,7 @@ export default function Login(props) {
   const pass = useRef("");
 
   function login(event) {
-    const toSend = {username: username, password: pass};
+    const toSend = {username: username.current.value, password: pass.current.value};
     let config = {
         headers: {
           "Content-Type": "application/json",

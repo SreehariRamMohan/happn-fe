@@ -1,4 +1,5 @@
 import React from 'react';
+import {useRef, useEffect} from "react"
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,6 +11,7 @@ import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from "@material-ui/core/styles";
+import axios from 'axios';
 
 import defaultPhoto from "../res/profile_photo.jpg"
 
@@ -27,14 +29,14 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     width: "100%",
     padding: theme.spacing(2),
-    textAlign: 'center',
     color: theme.palette.text.secondary,
   },
   profilePhoto: {
-      width: "50%",
+      width: "10%",
       height: "auto",
-      borderRadius: "20%",
-      overflow: "hidden" 
+      borderRadius: "50%",
+      overflow: "hidden",
+      marginRight: "1vw" 
   },
   cardLayout: {
       display: "flex",
@@ -57,20 +59,63 @@ const BlackText = withStyles({
 
 export default function ProfilePage(props) {
     const classes = useStyles();
+
+    const blurb1 = useRef("");
+    const blurb2 = useRef("");
+    const blurb3 = useRef("");
+    const blurb4 = useRef("");
+
+    useEffect(() => {
+      
+    }, [])
+
+    function saveProfile() {
+      const payload = {
+              blurb1: blurb1.current.value, 
+              blurb2: blurb2.current.value, 
+              blurb3: blurb3.current.value, 
+              blurb4: blurb4.current.value};
+      let config = {
+          headers: {
+            "Content-Type": "application/json",
+            'Access-Control-Allow-Origin': '*',
+            }
+          }
+      axios.post(
+        'http://localhost:5000/login',
+        payload,
+        config
+      )
+        .then(response => {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+
   return (
     <div style={{marginTop: "10vh"}}>
         <CssBaseline />
         <Container component="main" maxWidth="75%">
         <Grid container spacing={3}>
         
-        <div className={classes.profileItem}>
-            <Grid item xs={6}>
-                <img className={classes.profilePhoto} src={defaultPhoto} alt="Profile Picture" />
+        
+            <Grid item xs={12}>
+                <Paper className={classes.paper}> 
+                  <div className={classes.profileItem}>
+
+                  <img className={classes.profilePhoto} src={defaultPhoto} alt="Profile Picture" />
+                  <div className="d-flex flex-column">
+                    <BlackText color={classes.text} variant="h2">Mike L.</BlackText>
+                    <Typography color={classes.text} variant="h4">I am a student from New Haven interested in fire fighting.</Typography>
+                    
+                  </div>
+                  </div>
+                  
+                </Paper>
+
             </Grid>
-            <Grid item xs={6}>
-                <BlackText color={classes.text} variant="h1">Mike L.</BlackText>
-            </Grid>
-        </div>
         
         <Grid item xs={6}>
           <Paper className={classes.paper}>
@@ -80,7 +125,8 @@ export default function ProfilePage(props) {
                 id="standard-multiline-static"
                 multiline
                 placeholder="coffee, long walks, the beach"
-                rows={2}/>
+                rows={2}
+                onChange={(e) => blurb1.current = e.target.value} />
             </div>
           </Paper>
         </Grid>
@@ -93,7 +139,8 @@ export default function ProfilePage(props) {
                 id="standard-multiline-static"
                 multiline
                 placeholder="why we sleep"
-                rows={2}/>
+                rows={2}
+                onChange={(e) => blurb2.current = e.target.value}/>
             </div>
           </Paper>
         </Grid>
@@ -106,6 +153,7 @@ export default function ProfilePage(props) {
                 id="standard-multiline-static"
                 multiline
                 placeholder="beatles"
+                onChange={(e) => blurb3.current = e.target.value}
                 rows={2}/>
             </div>
           </Paper>
@@ -119,13 +167,40 @@ export default function ProfilePage(props) {
                 id="standard-multiline-static"
                 multiline
                 placeholder="I grew up in a small suburb"
+                onChange={(e) => blurb4.current = e.target.value}
+                rows={2}/>
+            </div>
+          </Paper>
+        </Grid>
+
+        <Grid item xs={6}>
+          <Paper className={classes.paper}>
+            <div className={classes.cardLayout}>
+                <BlackText>Foods I would take on a desert island</BlackText>
+                <TextField
+                id="standard-multiline-static"
+                multiline
+                placeholder="Oatmeal"
+                rows={2}/>
+            </div>
+          </Paper>
+        </Grid>
+
+        <Grid item xs={6}>
+          <Paper className={classes.paper}>
+            <div className={classes.cardLayout}>
+                <BlackText>Greatest movies</BlackText>
+                <TextField
+                id="standard-multiline-static"
+                multiline
+                placeholder="Interstellar!"
                 rows={2}/>
             </div>
           </Paper>
         </Grid>
        
       </Grid>
-      <Button className={classes.saveButton} variant="contained" color="primary">
+      <Button className={classes.saveButton} variant="contained" color="primary" onClick={saveProfile}>
         Save
       </Button>
         </Container>
