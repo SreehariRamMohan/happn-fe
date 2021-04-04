@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 
 export default function AppHeader() {
 
-  const routes = ['login', 'signup', 'chats', 'profile Page', 'logout', 'questionnaire'];
+  const routes = ['login', 'signup', 'chats', 'profilePage', 'logout', 'questionaire'];
   return (
     <div style={{flexGrow: "1"}}>
       <AppBar>
