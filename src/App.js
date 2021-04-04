@@ -1,7 +1,12 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 import { Button } from '@material-ui/core';
-import { Route, Switch } from 'react-router-dom';
 
 import { useNetwork } from './hooks/NetworkContext';
 
@@ -17,9 +22,9 @@ const routes = [
   { path: '/login', name: 'Login', Component: Login },
   { path: '/signup', name: 'Signup', Component: SignUp }, 
   { path: '/chats', name: 'Chats', Component: ChatScreen }, 
-  { path: '/profilePage', name: 'Profile Page', Component: ProfilePage }, 
+  { path: '/profile', name: 'Profile Page', Component: ProfilePage }, 
   { path: '/logout', name: 'Logout', Component: Login }, 
-  { path: '/questionaire', name: 'Questionaire', Component: Form }
+  { path: '/questionnaire', name: 'Questionaire', Component: Form }
 ];
 
 function App() {
@@ -31,18 +36,18 @@ function App() {
   
   return (
     <div className="App">
-        <AppHeader />
-        <div style={{marginTop: "10vh"}}>
-          <Switch>
-            {
-              routes.map(({ path, Component }) => (
-                <Route key={path} exact path={path}>
-                  <Component />
-                </Route>
-              ))
-            }
-          </Switch>
-        </div>
+      <AppHeader />
+      <div>
+        <Switch>
+        {
+          routes.map(({ path, Component }) => (
+            <Route key={path} exact path={path}>
+              <Component />
+            </Route>
+          ))
+        }
+        </Switch>
+      </div>
     </div>
   );
 }
