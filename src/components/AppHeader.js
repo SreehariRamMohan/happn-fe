@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Box, AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
+
 import { makeStyles } from '@material-ui/core/styles';
 import { NavLink } from 'react-router-dom';
 import { withStyles } from "@material-ui/core/styles";
@@ -35,6 +36,17 @@ export default function AppHeader() {
       <AppBar>
         <Toolbar>
           <div style={styles.container}>
+
+            <Typography edge="start" variant="h6"> Happen! </Typography>
+
+            { routes.map((aName) => 
+              <NavLink to={ `/${aName}` }>
+                <Button variant="contained">
+                  {aName}
+                </Button>
+              </NavLink>
+              )
+            }
             <WhiteNavItem edge="start" variant="h6"> Happen! </WhiteNavItem>
 
             {location.pathname.includes("Login") || location.pathname.includes("Logout") ? routes_public.map((aName) => 

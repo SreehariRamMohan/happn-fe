@@ -1,4 +1,4 @@
-import {React, useState, useRef} from 'react';
+import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,8 +12,6 @@ import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Paper from '@material-ui/core/Paper';
-import axios from 'axios';
 
 function Copyright() {
   return (
@@ -50,21 +48,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-export default function SignUp() {
+export default function Form() {
   const classes = useStyles();
 
-  const [image, setImage] = useState(null);
 
+  const q1 = useRef("");
+  const q2 = useRef("");
+  const q3 = useRef("");
+  const q4 = useRef("");
+  const q5 = useRef("");
 
-  const firstName = useRef("");
-  const lastName = useRef("");
-  const email = useRef("");
-  const pass = useRef("");
-  const bio = useRef("");
-
-  function handleSubmit(event) {
-    const toSend = {username: firstName+ lastName, password: pass};
+  function submitHandler(event) {
+    const toSend = {fq1: q1, fq2: q2, fq3: q3, fq4: q4, fq5: q5};
     let config = {
         headers: {
           "Content-Type": "application/json",
@@ -72,7 +67,7 @@ export default function SignUp() {
           }
         }
     axios.post(
-      'http://localhost:5000/signup',
+      'http://localhost:5000/uploadFormData',
       toSend,
       config
     )
@@ -82,18 +77,8 @@ export default function SignUp() {
       .catch(function (error) {
         console.log(error);
       });
-  }
 
 
-  function onImageChange(event) {
-    if (event.target.files && event.target.files[0]) {
-      let reader = new FileReader();
-      reader.onload = (e) => {
-        setImage(e.target.result);
-      };
-      reader.readAsDataURL(event.target.files[0]);
-    }
-  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -103,84 +88,64 @@ export default function SignUp() {
           <AssignmentOutlinedIcon />
         </Avatar>
         <center><Typography component="h1" variant="h5">
-          Create an account!
+          Answer these questions for matching to <b>happn</b>!
         </Typography></center>
         <form className={classes.form} noValidate>
-          <center>
-            <Avatar style={{height: 70, width: 70}} src={image}>
-            </Avatar>
-          </center>
-          <br />
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-                onChange={(event) => firstName.current = event.target.value}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
+              <Typography>
+                What is your favorite childhood memory?
+              </Typography>
               <TextField
                 variant="outlined"
+                required
                 fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-                onChange={(event) => lastName.current = event.target.value}
+                onChange={(event) => q1.current = event.target.value}
               />
             </Grid>
             <Grid item xs={12}>
+              <Typography>
+                Describe your music taste.
+              </Typography>
               <TextField
                 variant="outlined"
+                required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                onChange={(event) => email.current = event.target.value}
+                onChange={(event) => q2.current = event.target.value}
               />
             </Grid>
             <Grid item xs={12}>
+              <Typography>
+                If you had to describe yourself as an animal, what would it be and why?
+              </Typography>
               <TextField
                 variant="outlined"
+                required
                 fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={(event) => pass.current = event.target.value}
+                onChange={(event) => q3.current = event.target.value}
               />
             </Grid>
             <Grid item xs={12}>
+              <Typography>
+                If you were invincible for a day, what would you do?
+              </Typography>
               <TextField
                 variant="outlined"
+                required
                 fullWidth
-                multiline
-                name="bio"
-                label="Bio"
-                id="bio"
-                onChange={(event) => bio.current = event.target.value}
+                onChange={(event) => q4.current = event.target.value}
               />
             </Grid>
             <Grid item xs={12}>
-              <Button
-                variant="contained"
-                component="label"
-                onChange={onImageChange}
-              >
-                Upload Profile Picture
-                <input
-                  type="file"
-                  hidden
-                />
-              </Button>
+              <Typography>
+                What’s the longest you’ve gone without sleep and why?
+              </Typography>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                onChange={(event) => q5.current = event.target.value}
+              />
             </Grid>
           </Grid>
           <Button
@@ -189,7 +154,7 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={handleSubmit}
+            onClick={submitHandler}
           >
             Make it happn!
           </Button>
