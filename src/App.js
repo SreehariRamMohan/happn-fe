@@ -1,7 +1,9 @@
 import './App.css';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '@material-ui/core';
 import { Route, Switch } from 'react-router-dom';
+
+import { useNetwork } from './hooks/NetworkContext';
 
 import ChatScreen from './views/ChatScreen';
 import AppHeader from './components/AppHeader';
@@ -21,20 +23,26 @@ const routes = [
 ];
 
 function App() {
+
+  // const networkActions = useNetwork();
+  // useEffect(() => {
+  //   const value = networkActions.idData;
+  // }, []);
+  
   return (
     <div className="App">
-      <AppHeader />
-      <div style={{marginTop: "10vh"}}>
-        <Switch>
-        {
-          routes.map(({ path, Component }) => (
-            <Route key={path} exact path={path}>
-              <Component />
-            </Route>
-          ))
-        }
-        </Switch>
-      </div>
+        <AppHeader />
+        <div style={{marginTop: "10vh"}}>
+          <Switch>
+            {
+              routes.map(({ path, Component }) => (
+                <Route key={path} exact path={path}>
+                  <Component />
+                </Route>
+              ))
+            }
+          </Switch>
+        </div>
     </div>
   );
 }
