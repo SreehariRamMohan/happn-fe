@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+import { io } from "socket.io-client";
+
 
 import SendIcon from '@material-ui/icons/Send';
 import { Box, Button, TextField, IconButton,
@@ -7,7 +10,7 @@ import PersonCard from '../components/PersonCard';
 import ReceivedMessage from '../components/ReceivedMessage';
 import SentMessage from '../components/SentMessage';
 
-export default function ChatScreen() {
+export default function ChatScreen(props) {
 
   const [contacts, setContacts] = useState([
     { name: "kevin", message: "hello!fawlohfaiewrlerihglirheg!! i am stuck in the chat please save me i can't take this anymor-", pfp: "#" },
@@ -26,10 +29,33 @@ export default function ChatScreen() {
 
   const [currentlyMessaging, setCurrentlyMessaging] = useState(contacts[0].name);
 
+  const my_friend_code = "user1";
+  const socket = io("ws://localhost:5000/websockets", { query: `friend_code=${my_friend_code}` });
+
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log(socket.connected);
+    });
+
+    socket.on("receive_message", (data) => {
+      console.log(JSON.stringify(data, null, 2));
+    });
+  }, []);
+
   function changeMessageChat(newContactName) {
     if (newContactName !== currentlyMessaging) {
       setCurrentlyMessaging(newContactName);
     }
+  }
+
+  function sendMessageToSocketServer() {
+    const receiptant_friend_code = "user2";
+    socket.emit("send_message", {
+      "message": "dummyMessage",
+      "sender_friend_code": my_friend_code, 
+      "receiver_friend_code": receiptant_friend_code 
+    });
+    console.log("sent message to the socket server");
   }
 
   return (
@@ -67,7 +93,11 @@ export default function ChatScreen() {
             style={{ width: "92%" }}
           />
 
-          <IconButton aria-label="send" style={{marginLeft: "0.4rem"}}>
+          <IconButton 
+            aria-label="send" 
+            style={{marginLeft: "0.4rem"}}
+            onClick={() => sendMessageToSocketServer()}
+          >
             <SendIcon style={{fontSize: 50}}/>
           </IconButton>
         </Box>

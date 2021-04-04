@@ -1,18 +1,39 @@
 import './App.css';
 import React from 'react';
 import { Button } from '@material-ui/core';
+import { Route, Switch } from 'react-router-dom';
 
 import ChatScreen from './views/ChatScreen';
 import AppHeader from './components/AppHeader';
 import ProfilePage from "./ProfilePage/ProfilePage"
+import Login from './Login';
+import SignUp from './SignUp';
+import Form from './Questions';
+
+
+const routes = [
+  { path: '/login', name: 'Login', Component: Login },
+  { path: '/signup', name: 'Signup', Component: SignUp }, 
+  { path: '/chats', name: 'Chats', Component: ChatScreen }, 
+  { path: '/profilePage', name: 'Profile Page', Component: ProfilePage }, 
+  { path: '/logout', name: 'Logout', Component: Login }, 
+  { path: '/questionaire', name: 'Questionaire', Component: Form }
+];
 
 function App() {
   return (
     <div className="App">
       <AppHeader />
       <div style={{marginTop: "10vh"}}>
-        <ProfilePage />
-        {/* <ChatScreen /> */}
+        <Switch>
+        {
+          routes.map(({ path, Component }) => (
+            <Route key={path} exact path={path}>
+              <Component />
+            </Route>
+          ))
+        }
+        </Switch>
       </div>
     </div>
   );

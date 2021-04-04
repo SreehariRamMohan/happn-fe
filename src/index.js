@@ -2,10 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import Login from './Login';
-import SignUp from './SignUp';
-import Form from './Questions';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -14,7 +12,10 @@ ReactDOM.render(
         // <SignUp />
         // <Form />
     }
-    <App />
+
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -1,20 +1,26 @@
 import React from 'react';
 import { Button, Box, AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
-import ChatScreen from "../views/ChatScreen"
-import ProfilePage from "../ProfilePage/ProfilePage"
-import Form from "../Questions"
+import { NavLink } from 'react-router-dom';
 
 export default function AppHeader() {
+
+  const routes = ['login', 'signup', 'chats', 'profilePage', 'logout', 'questionaire'];
   return (
     <div style={{flexGrow: "1"}}>
       <AppBar>
         <Toolbar>
           <div style={styles.container}>
-            <Typography edge="start" variant="h6"> Happn</Typography>
-            <Typography>Chats</Typography>
-            <Typography>Profile Page</Typography>
-            <Typography>Question responses</Typography>
-            <Typography>Logout</Typography>
+            <Typography edge="start" variant="h6"> Happen! </Typography>
+
+            { routes.map((aName) => 
+              <NavLink to={ `/${aName}` }>
+                <Button variant="contained">
+                  {aName}
+                </Button>
+              </NavLink>
+
+              )
+            }
           </div>
         </Toolbar>
       </AppBar>
