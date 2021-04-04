@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,10 @@ import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+
+import axios from 'axios';
+import { useNetwork } from '../hooks/NetworkContext';
+import { URL, AXIOS_CONFIG } from '../constants';
 
 function Copyright() {
   return (
@@ -51,6 +55,29 @@ const useStyles = makeStyles((theme) => ({
 export default function Form() {
   const classes = useStyles();
 
+  const q1 = useRef("");
+  const q2 = useRef("");
+  const q3 = useRef("");
+  const q4 = useRef("");
+  const q5 = useRef("");
+  const networkActions = useNetwork();
+
+  function submitHandler(event) {
+    const toSend = {fq1: q1, fq2: q2, fq3: q3, fq4: q4, fq5: q5, mongo_id: networkActions.idData.mongo_id};
+    axios.post(
+      URL + "uploadFormData",
+      toSend,
+      AXIOS_CONFIG
+    ).then(response => {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -71,6 +98,7 @@ export default function Form() {
                 variant="outlined"
                 required
                 fullWidth
+                onChange={(event) => q1.current = event.target.value}
               />
             </Grid>
             <Grid item xs={12}>
@@ -81,6 +109,7 @@ export default function Form() {
                 variant="outlined"
                 required
                 fullWidth
+                onChange={(event) => q2.current = event.target.value}
               />
             </Grid>
             <Grid item xs={12}>
@@ -91,6 +120,7 @@ export default function Form() {
                 variant="outlined"
                 required
                 fullWidth
+                onChange={(event) => q3.current = event.target.value}
               />
             </Grid>
             <Grid item xs={12}>
@@ -101,6 +131,7 @@ export default function Form() {
                 variant="outlined"
                 required
                 fullWidth
+                onChange={(event) => q4.current = event.target.value}
               />
             </Grid>
             <Grid item xs={12}>
@@ -111,6 +142,7 @@ export default function Form() {
                 variant="outlined"
                 required
                 fullWidth
+                onChange={(event) => q5.current = event.target.value}
               />
             </Grid>
           </Grid>
@@ -120,6 +152,7 @@ export default function Form() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={submitHandler}
           >
             Make it happn!
           </Button>

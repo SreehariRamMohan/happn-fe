@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -7,6 +7,8 @@ import {
   Link
 } from "react-router-dom";
 import { Button } from '@material-ui/core';
+
+import { useNetwork } from './hooks/NetworkContext';
 
 import ChatScreen from './views/ChatScreen';
 import AppHeader from './components/AppHeader';
@@ -26,6 +28,12 @@ const routes = [
 ];
 
 function App() {
+
+  // const networkActions = useNetwork();
+  // useEffect(() => {
+  //   const value = networkActions.idData;
+  // }, []);
+  
   return (
     <div className="App">
       <AppHeader />

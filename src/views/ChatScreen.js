@@ -9,6 +9,7 @@ List, ListItem, ListItemAvatar, Avatar, Typography, Divider, ListItemText} from 
 import PersonCard from '../components/PersonCard';
 import ReceivedMessage from '../components/ReceivedMessage';
 import SentMessage from '../components/SentMessage';
+import { useNetwork } from '../hooks/NetworkContext';
 
 export default function ChatScreen(props) {
 
@@ -29,7 +30,8 @@ export default function ChatScreen(props) {
 
   const [currentlyMessaging, setCurrentlyMessaging] = useState(contacts[0].name);
 
-  const my_friend_code = "user1";
+  const networkActions = useNetwork();
+  const my_friend_code = networkActions.idData.friend_code;
   const socket = io("ws://localhost:5000/websockets", { query: `friend_code=${my_friend_code}` });
 
   useEffect(() => {
@@ -59,7 +61,7 @@ export default function ChatScreen(props) {
   }
 
   return (
-    <Box display="flex" flexDirection="row" alignItems="flex-end">
+    <Box display="flex" flexDirection="row" alignItems="flex-end" style={{marginTop: "10vh"}}>
       <div style={styles.contactsContainer}>
         {
           contacts.map((aContact) => 

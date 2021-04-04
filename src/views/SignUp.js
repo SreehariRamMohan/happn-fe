@@ -14,6 +14,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
+import { useNetwork } from '../hooks/NetworkContext';
+import { URL, AXIOS_CONFIG } from '../constants';
 
 function Copyright() {
   return (
@@ -63,27 +65,25 @@ export default function SignUp() {
   const pass = useRef("");
   const bio = useRef("");
 
+  const networkActions = useNetwork();
+
   function handleSubmit(event) {
-    const toSend = {username: firstName+ lastName, password: pass};
-    let config = {
-        headers: {
-          "Content-Type": "application/json",
-          'Access-Control-Allow-Origin': '*',
-          }
-        }
+    const toSend = {username: firstName + lastName, password: pass};
     axios.post(
-      'http://localhost:5000/signup',
+      URL + "signup",
       toSend,
-      config
+      AXIOS_CONFIG
     )
       .then(response => {
+        console.log(response.data);
+        let data = response.data;
+        networkActions.updateIdData({ 'mongo_id': data.mongo_id, 'friend_code': data.friend_code });
         console.log(response);
       })
       .catch(function (error) {
         console.log(error);
       });
   }
-
 
   function onImageChange(event) {
     if (event.target.files && event.target.files[0]) {
