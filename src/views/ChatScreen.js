@@ -14,25 +14,34 @@ import { WEBSOCKET_URL } from '../constants';
 
 export default function ChatScreen(props) {
 
-  const [contacts, setContacts] = useState([
-    { name: "kevin", message: "hello!fawlohfaiewrlerihglirheg!! i am stuck in the chat please save me i can't take this anymor-", pfp: "#" },
-    { name: "Sree", message: "To the sweet balm of coffee, by the grace of which we shall accomplish the task before us", pfp: "#" },
-    { name: "Emily", message: "I had mentally decided not to be a part of this conversation, but based on the direction this is going in, I have to interject. ", pfp: "#" },
-    { name: "Gareth", message: "yep i can make a chat and stuff", pfp: "#" },
-    { name: "kevin", message: "She’s clearly shocked by my behavior. She should be. My behavior is shocking. ", pfp: "#" },
-    { name: "Sree", message: "Hi!", pfp: "#" },
-    { name: "Emily", message: "Hi!", pfp: "#" },
-    { name: "Gareth", message: "Hi!", pfp: "#" },
-    { name: "kevin", message: "hello!fawlohfaiewrlerihglirheg!! i am stuck in the chat please save me i can't take this anymor-", pfp: "#" },
-    { name: "Sree", message: "Hi!", pfp: "#" },
-    { name: "Emily", message: "Hi!", pfp: "#" },
-    { name: "Gareth", message: "Hi!", pfp: "#" },
+  const [currentlyMessaging, setCurrentlyMessaging] = useState("kevin");
+  const [inputText, setInputText] = useState("");
+
+  const [messages, setMessages] = useState([
+    { sentByMe: true, message: "hello" }, 
+    { sentByMe: false, name: currentlyMessaging, message: "hiii", pfp: "#" }, 
+    { sentByMe: true, message: "hello" }, 
+    { sentByMe: true, message: "hello" }, 
+    { sentByMe: false, name: currentlyMessaging, message: "hiii", pfp: "#" }, 
+    { sentByMe: false, name: currentlyMessaging, message: "hiii", pfp: "#" }, 
+    { sentByMe: false, name: currentlyMessaging, message: "hiii", pfp: "#" }
   ]);
 
-  const [currentlyMessaging, setCurrentlyMessaging] = useState(contacts[0].name);
+  const [contacts, setContacts] = useState([
+    { name: "Kevin", message: "hello", pfp: "#" },
+    { name: "fc6ea4f3-86c0-4f2d-a64f-7b65f42f4ec3", message: "Ooh have you listened to Drax Project's latest album?", pfp: "#" },
+    { name: "81f6d31e-480f-485d-a69f-6e0a2d0b40fd", message: "I've been trying to land a kickflip since forever", pfp: "#" },
+    { name: "38ee6466-a322-47a2-afd5-1c75a7f17aa6", message: "yep i can make a chat and stuff", pfp: "#" },
+    { name: "b053bee6-bffb-4ae4-a40f-475239df7976", message: "Go read Sarah J. Maas' new book", pfp: "#" },
+    { name: "0c2bfdd7-4409-4fd9-90b3-0beb033bbac4", message: "Hi!", pfp: "#" },
+    { name: "bc054229-edf1-4f7e-9fde-e697a49dd6d9", message: "Who's your favorite author?", pfp: "#" },
+    { name: "4b4762c7-339d-4280-904f-6f13782a7eae", message: "Hi!", pfp: "#" },
+    { name: "3533c4a7-e727-423d-9e5f-6c1d960c08c4", message: "helloooo", pfp: "#" },
+    { name: "c38b6f0a-e16c-4700-b3aa-8136980a88dd", message: "Hi!", pfp: "#" },
+  ]);
 
   const networkActions = useNetwork();
-  const my_friend_code = networkActions.idData.friend_code ?? "user1";
+  const my_friend_code = networkActions.idData.friend_code ?? "46ffb587-69a2-483f-9c4d-c6b4c8e07f96";
   const socket = io(WEBSOCKET_URL, { query: `friend_code=${my_friend_code}` });
 
   useEffect(() => {
@@ -42,6 +51,12 @@ export default function ChatScreen(props) {
 
     socket.on("receive_message", (data) => {
       console.log(JSON.stringify(data, null, 2));
+      let message = data.message;
+      let friend_code = data.friend_code;
+
+      let newMessages = [...messages];
+      newMessages.push({ sentByMe: false, name: currentlyMessaging, message: message, pfp: "#" });
+      setMessages(newMessages);
     });
   }, []);
 
@@ -53,44 +68,67 @@ export default function ChatScreen(props) {
 
   function sendMessageToSocketServer() {
     const receiptant_friend_code = "user2";
+
+    // let message = "dummyMessage";
+    let message = inputText;
     socket.emit("send_message", {
-      "message": "dummyMessage",
+      "message": message,
       "sender_friend_code": my_friend_code, 
       "receiver_friend_code": receiptant_friend_code 
     });
+
+    let newMessages = [...messages];
+    newMessages.push({ sentByMe: true, message: message });
+    setMessages(newMessages);
     console.log("sent message to the socket server");
+    setInputText("");
   }
 
   return (
     <Box display="flex" flexDirection="row" alignItems="flex-end" style={{marginTop: "10vh"}}>
       <div style={styles.contactsContainer}>
         {
-          contacts.map((aContact) => 
+          contacts.map((aContact, index) =>  {
+            let firstMessage = messages[messages.length - 1].message;
+            return (
             <div onClick={() => changeMessageChat(aContact.name)}>
               <PersonCard 
                 name={aContact.name} 
-                message={aContact.message} 
+                message={(index === 0) ? firstMessage : aContact.message} 
                 pfp={aContact.pfp}
               />
-            </div>
+            </div>);
+          }
           )
         }
       </div>
 
       <div style={styles.chatContainer}>
-        { currentlyMessaging }
+
+        <Typography variant="h4" gutterBottom>
+          { currentlyMessaging }
+        </Typography>
 
         <div style={styles.messageBox}>
-          <ReceivedMessage name="kevin" message="hi" pfp="#"/>
-          <ReceivedMessage name="kevin" message="hi" pfp="#"/>
-          <SentMessage message="what"/>
-          <ReceivedMessage name="kevin" message="hi" pfp="#"/>
-          <SentMessage message="hi"/>
+
+          { 
+            messages.map((aMessage) => {
+              if (aMessage.sentByMe) {
+                return <SentMessage message={aMessage.message}/>
+              }
+              else {
+                return <ReceivedMessage name={aMessage.name} message={aMessage.message} pfp={aMessage.pfp} />
+              }
+
+            })
+          }
         </div>
 
         <Box display="flex" alignItems="center" justifyContent="center">
           <TextField
             id="outlined-required"
+            value={inputText}
+            onChange={(e) => setInputText(e.target.value)}
             defaultValue="There will be moments when you have to be a grown-up. Those moments are tricks.  Do not fall for them. "
             variant="outlined"
             style={{ width: "92%" }}

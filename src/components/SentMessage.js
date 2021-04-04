@@ -8,10 +8,12 @@ export default function SentMessage(props) {
   return (
     <React.Fragment>
       <ListItem>
-        <div style={{position: "absolute", right: "1rem "}}>
+        <div style={{position: "absolute", right: "1rem"}}>
           <Chip label={props.message} />
         </div>
       </ListItem>
+      <br />
+      <br />
     </React.Fragment>
   );
 }
