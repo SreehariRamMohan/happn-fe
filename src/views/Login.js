@@ -13,7 +13,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Pattern from './resources/happn-pattern.png';
+import Pattern from '../resources/happn-pattern.png';
 
 function Copyright() {
   return (
@@ -82,6 +82,7 @@ export default function Login(props) {
     )
       .then(response => {
         console.log(response);
+        props.history.push("/profile");
       })
       .catch(function (error) {
         console.log(error);

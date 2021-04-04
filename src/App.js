@@ -10,39 +10,36 @@ import { Button } from '@material-ui/core';
 
 import ChatScreen from './views/ChatScreen';
 import AppHeader from './components/AppHeader';
-import ProfilePage from "./ProfilePage/ProfilePage";
-import Login from './Login';
-import Form from './Questions';
-import SignUp from './SignUp';
+import ProfilePage from "./ProfilePage/ProfilePage"
+import Login from './views/Login';
+import SignUp from './views/SignUp';
+import Form from './views/Questions';
+
+const routes = [
+  { path: '/', name: 'Login', Component: ChatScreen },
+  { path: '/login', name: 'Login', Component: Login },
+  { path: '/signup', name: 'Signup', Component: SignUp }, 
+  { path: '/chats', name: 'Chats', Component: ChatScreen }, 
+  { path: '/profilePage', name: 'Profile Page', Component: ProfilePage }, 
+  { path: '/logout', name: 'Logout', Component: Login }, 
+  { path: '/questionaire', name: 'Questionaire', Component: Form }
+];
 
 function App() {
   return (
     <div className="App">
-      <Router>
-            <AppHeader />
-            <div style={{marginTop: "10vh"}}>
-            <Switch>
-              <Route path="/login">
-                 <Login />
-              </Route>
-              <Route path="/profile">
-                <ProfilePage />
-              </Route>
-              <Route path="/chat">
-                <React.Fragment>
-                    <ChatScreen username="user1"/>
-                    <ChatScreen username="user2"/>
-                  </React.Fragment>
-              </Route>
-              <Route path="/questions">
-                <Form />
-              </Route>
-              <Route path="/signup">
-                 <SignUp />
-              </Route>
-            </Switch>
-            </div>
-      </Router>
+      <AppHeader />
+      <div style={{marginTop: "10vh"}}>
+        <Switch>
+        {
+          routes.map(({ path, Component }) => (
+            <Route key={path} exact path={path}>
+              <Component />
+            </Route>
+          ))
+        }
+        </Switch>
+      </div>
     </div>
   );
 }

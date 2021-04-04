@@ -64,7 +64,7 @@ export default function SignUp() {
   const bio = useRef("");
 
   function handleSubmit(event) {
-    const toSend = {username: firstName + lastName, password: pass};
+    const toSend = {username: firstName+ lastName, password: pass};
     let config = {
         headers: {
           "Content-Type": "application/json",

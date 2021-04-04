@@ -29,7 +29,7 @@ export default function ChatScreen(props) {
 
   const [currentlyMessaging, setCurrentlyMessaging] = useState(contacts[0].name);
 
-  const my_friend_code = props.username;
+  const my_friend_code = "user1";
   const socket = io("ws://localhost:5000/websockets", { query: `friend_code=${my_friend_code}` });
 
   useEffect(() => {
