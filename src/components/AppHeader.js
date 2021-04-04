@@ -28,7 +28,7 @@ export default function AppHeader() {
 
   //'signup'
   const routes_public = ['Login'];
-  const routes = ['Questionaire', 'Profile', 'Chats', 'Logout'];
+  const routes = ['questionnaire', 'profile', 'chats', 'logout'];
 
   return (
     <div style={{flexGrow: "1"}}>

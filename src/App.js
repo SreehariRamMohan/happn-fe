@@ -15,9 +15,9 @@ const routes = [
   { path: '/login', name: 'Login', Component: Login },
   { path: '/signup', name: 'Signup', Component: SignUp }, 
   { path: '/chats', name: 'Chats', Component: ChatScreen }, 
-  { path: '/profilePage', name: 'Profile Page', Component: ProfilePage }, 
+  { path: '/profile', name: 'Profile Page', Component: ProfilePage }, 
   { path: '/logout', name: 'Logout', Component: Login }, 
-  { path: '/questionaire', name: 'Questionaire', Component: Form }
+  { path: '/questionnaire', name: 'Questionaire', Component: Form }
 ];
 
 function App() {

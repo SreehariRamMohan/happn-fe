@@ -58,7 +58,7 @@ const BlackText = withStyles({
 export default function ProfilePage(props) {
     const classes = useStyles();
   return (
-    <>
+    <div style={{marginTop: "10vh"}}>
         <CssBaseline />
         <Container component="main" maxWidth="75%">
         <Grid container spacing={3}>
@@ -129,6 +129,6 @@ export default function ProfilePage(props) {
         Save
       </Button>
         </Container>
-    </>
+    </div>
   )
 }
