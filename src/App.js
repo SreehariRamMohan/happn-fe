@@ -29,7 +29,7 @@ function App() {
   return (
     <div className="App">
       <AppHeader />
-      <div style={{marginTop: "10vh"}}>
+      <div>
         <Switch>
         {
           routes.map(({ path, Component }) => (
