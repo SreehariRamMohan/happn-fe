@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import {React, useState, useRef} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
+import axios from 'axios';
 
 function Copyright() {
   return (
@@ -56,6 +57,34 @@ export default function SignUp() {
   const [image, setImage] = useState(null);
 
 
+  const firstName = useRef("");
+  const lastName = useRef("");
+  const email = useRef("");
+  const pass = useRef("");
+  const bio = useRef("");
+
+  function handleSubmit(event) {
+    const toSend = {username: firstName+ lastName, password: pass};
+    let config = {
+        headers: {
+          "Content-Type": "application/json",
+          'Access-Control-Allow-Origin': '*',
+          }
+        }
+    axios.post(
+      'http://localhost:5000/signup',
+      toSend,
+      config
+    )
+      .then(response => {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+
   function onImageChange(event) {
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
@@ -92,6 +121,7 @@ export default function SignUp() {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                onChange={(event) => firstName.current = event.target.value}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -102,6 +132,7 @@ export default function SignUp() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
+                onChange={(event) => lastName.current = event.target.value}
               />
             </Grid>
             <Grid item xs={12}>
@@ -112,6 +143,7 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={(event) => email.current = event.target.value}
               />
             </Grid>
             <Grid item xs={12}>
@@ -123,6 +155,7 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={(event) => pass.current = event.target.value}
               />
             </Grid>
             <Grid item xs={12}>
@@ -133,6 +166,7 @@ export default function SignUp() {
                 name="bio"
                 label="Bio"
                 id="bio"
+                onChange={(event) => bio.current = event.target.value}
               />
             </Grid>
             <Grid item xs={12}>
@@ -155,6 +189,7 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleSubmit}
           >
             Make it happn!
           </Button>

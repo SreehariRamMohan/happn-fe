@@ -29,7 +29,10 @@ function App() {
                 <ProfilePage />
               </Route>
               <Route path="/chat">
-                <ChatScreen />
+                <React.Fragment>
+                    <ChatScreen username="user1"/>
+                    <ChatScreen username="user2"/>
+                  </React.Fragment>
               </Route>
               <Route path="/questions">
                 <Form />

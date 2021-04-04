@@ -1,4 +1,5 @@
-import React from 'react';
+import { React, useRef } from 'react';
+import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -60,8 +61,34 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login() {
+export default function Login(props) {
   const classes = useStyles();
+
+  const username = useRef("");
+  const pass = useRef("");
+
+  function login(event) {
+    const toSend = {username: username, password: pass};
+    let config = {
+        headers: {
+          "Content-Type": "application/json",
+          'Access-Control-Allow-Origin': '*',
+          }
+        }
+    axios.post(
+      'http://localhost:5000/login',
+      toSend,
+      config
+    )
+      .then(response => {
+        console.log(response);
+        props.history.push("/profile");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -86,6 +113,7 @@ export default function Login() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={(event) => username.current = event.target.value}
             />
             <TextField
               variant="outlined"
@@ -97,20 +125,24 @@ export default function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={(event) => pass.current = event.target.value}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary"/>}
               label="Remember me"
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Sign In
+            <Link to="/profile">
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={login}
+              >
+                Sign In
             </Button>
+            </Link>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
