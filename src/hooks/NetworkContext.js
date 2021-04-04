@@ -5,13 +5,13 @@ export const NetworkContext = React.createContext();
 
 export const useNetwork = () => React.useContext(NetworkContext);
 
-const url = "http://localhost:5000/";
-const config = {
-  headers: {
-    "Content-Type": "application/json",
-    'Access-Control-Allow-Origin': '*',
-  }
-}
+// const url = "http://localhost:5000/";
+// const config = {
+//   headers: {
+//     "Content-Type": "application/json",
+//     'Access-Control-Allow-Origin': '*',
+//   }
+// }
 
 export const NetworkProvider = (props) => {
 
@@ -19,11 +19,11 @@ export const NetworkProvider = (props) => {
 
   const updateIdData = (foo) => { setIdData(foo); };
 
-  const postRequest = (resource, data) => {
-    axios.post(url + resource, data, config).then((res) => {
-      return res.data()
-    });
-  }
+  // const postRequest = (resource, data) => {
+  //   axios.post(url + resource, data, config).then((res) => {
+  //     return res.data()
+  //   });
+  // }
 
   const providerValues = {
     idData: idData, 

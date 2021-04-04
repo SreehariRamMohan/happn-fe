@@ -10,6 +10,7 @@ import PersonCard from '../components/PersonCard';
 import ReceivedMessage from '../components/ReceivedMessage';
 import SentMessage from '../components/SentMessage';
 import { useNetwork } from '../hooks/NetworkContext';
+import { WEBSOCKET_URL } from '../constants';
 
 export default function ChatScreen(props) {
 
@@ -31,8 +32,8 @@ export default function ChatScreen(props) {
   const [currentlyMessaging, setCurrentlyMessaging] = useState(contacts[0].name);
 
   const networkActions = useNetwork();
-  const my_friend_code = networkActions.idData.friend_code;
-  const socket = io("ws://localhost:5000/websockets", { query: `friend_code=${my_friend_code}` });
+  const my_friend_code = networkActions.idData.friend_code ?? "user1";
+  const socket = io(WEBSOCKET_URL, { query: `friend_code=${my_friend_code}` });
 
   useEffect(() => {
     socket.on("connect", () => {

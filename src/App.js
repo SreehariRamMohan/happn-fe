@@ -29,7 +29,7 @@ const routes = [
 
 function App() {
 
-  // const networkActions = useNetwork();
+  const networkActions = useNetwork();
   // useEffect(() => {
   //   const value = networkActions.idData;
   // }, []);
@@ -48,6 +48,7 @@ function App() {
         }
         </Switch>
       </div>
+      { JSON.stringify(networkActions.idData) }
     </div>
   );
 }
