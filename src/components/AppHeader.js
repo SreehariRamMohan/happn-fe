@@ -28,8 +28,9 @@ export default function AppHeader() {
   const location = useLocation();
 
   //'signup'
-  const routes_public = ['Login'];
+  const routes_public = ['login'];
   const routes = ['questionnaire', 'profile', 'chats', 'logout'];
+  // alert(location.pathname);
 
   return (
     <div style={{flexGrow: "1"}}>
@@ -39,7 +40,7 @@ export default function AppHeader() {
 
             <WhiteNavItem edge="start" variant="h6"> Happn</WhiteNavItem>
 
-            {location.pathname.includes("Login") || location.pathname.includes("logout") ? routes_public.map((aName) => 
+            {location.pathname.includes("login") || location.pathname.includes("signup") || location.pathname.includes("logout") || (location.pathname === "/") ? routes_public.map((aName) => 
               <Typography variant="h6">
                 <NavLink className={classes.navlink} to={ `/${aName}` }>
                     {aName}
