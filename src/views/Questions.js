@@ -60,9 +60,10 @@ export default function Form() {
   const q3 = useRef("");
   const q4 = useRef("");
   const q5 = useRef("");
+  const networkActions = useNetwork();
 
   function submitHandler(event) {
-    const toSend = {fq1: q1, fq2: q2, fq3: q3, fq4: q4, fq5: q5};
+    const toSend = {fq1: q1, fq2: q2, fq3: q3, fq4: q4, fq5: q5, mongo_id: networkActions.idData.mongo_id};
     axios.post(
       URL + "uploadFormData",
       toSend,
