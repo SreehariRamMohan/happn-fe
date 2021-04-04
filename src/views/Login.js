@@ -14,6 +14,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Pattern from '../resources/happn-pattern.png';
+import { useNetwork } from '../hooks/NetworkContext';
+import { URL, AXIOS_CONFIG } from '../constants';
 
 function Copyright() {
   return (
@@ -66,22 +68,19 @@ export default function Login(props) {
 
   const username = useRef("");
   const pass = useRef("");
+  const networkActions = useNetwork();
 
   function login(event) {
     const toSend = {username: username, password: pass};
-    let config = {
-        headers: {
-          "Content-Type": "application/json",
-          'Access-Control-Allow-Origin': '*',
-          }
-        }
     axios.post(
-      'http://localhost:5000/login',
+      URL + "login",
       toSend,
-      config
+      AXIOS_CONFIG
     )
       .then(response => {
-        console.log(response);
+        console.log(response.data);
+        let data = response.data;
+        networkActions.updateIdData({ 'mongo_id': data.mongo_id, 'friend_code': data.friend_code });
         props.history.push("/profile");
       })
       .catch(function (error) {

@@ -59,7 +59,7 @@ export default function ChatScreen(props) {
   }
 
   return (
-    <Box display="flex" flexDirection="row" alignItems="flex-end">
+    <Box display="flex" flexDirection="row" alignItems="flex-end" style={{marginTop: "10vh"}}>
       <div style={styles.contactsContainer}>
         {
           contacts.map((aContact) => 
