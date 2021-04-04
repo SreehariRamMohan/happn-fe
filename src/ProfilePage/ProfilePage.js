@@ -41,6 +41,10 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: "column",
       justifyContent: "space-evenly"
   },
+  saveButton: {
+    float: "right",
+    marginTop:"1rem"
+  }
  
  
 }))
@@ -67,9 +71,6 @@ export default function ProfilePage(props) {
                 <BlackText color={classes.text} variant="h1">Mike L.</BlackText>
             </Grid>
         </div>
-
-        
-        
         
         <Grid item xs={6}>
           <Paper className={classes.paper}>
@@ -124,6 +125,9 @@ export default function ProfilePage(props) {
         </Grid>
        
       </Grid>
+      <Button className={classes.saveButton} variant="contained" color="primary">
+        Save
+      </Button>
         </Container>
     </>
   )

@@ -1,5 +1,8 @@
 import React from 'react';
 import { Button, Box, AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
+import ChatScreen from "../views/ChatScreen"
+import ProfilePage from "../ProfilePage/ProfilePage"
+import Form from "../Questions"
 
 export default function AppHeader() {
   return (
@@ -7,8 +10,11 @@ export default function AppHeader() {
       <AppBar>
         <Toolbar>
           <div style={styles.container}>
-            <Typography edge="start" variant="h6"> Happen! </Typography>
-            <Button color="inherit">Login</Button>
+            <Typography edge="start" variant="h6"> Happn</Typography>
+            <Typography>Chats</Typography>
+            <Typography>Profile Page</Typography>
+            <Typography>Question responses</Typography>
+            <Typography>Logout</Typography>
           </div>
         </Toolbar>
       </AppBar>
@@ -20,6 +26,6 @@ const styles = {
   container: {
     display: "flex", 
     justifyContent: "space-between",
-    width: "100%",
+    width: "50%",
   }
 }
